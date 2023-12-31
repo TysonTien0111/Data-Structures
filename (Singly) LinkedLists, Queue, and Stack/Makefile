@@ -7,7 +7,7 @@ CXX := g++
 CXXFLAGS := -std=c++11 -Wall -g
 
 # Source files
-SRCS := main.cpp SinglyLinkedLists.cpp Node.cpp
+SRCS := main.cpp SinglyLinkedLists.cpp Node.cpp Queue.cpp
 
 # Object files
 OBJS := $(SRCS:.cpp=.o)
