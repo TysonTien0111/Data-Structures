@@ -241,6 +241,4 @@ SinglyLinkedLists::~SinglyLinkedLists() {
     }
 
     head = tail = nullptr;
-
-    // Delete from Ending
 }
