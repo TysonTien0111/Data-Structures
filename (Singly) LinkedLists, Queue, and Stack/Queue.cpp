@@ -13,6 +13,10 @@ void Queue::enqueue(int x) {
 }
 
 void Queue::dequeue() {
+    if (linked_list.get_length()) {
+        cout << "Can't dequeue, queue is empty." << endl;
+    }
+
     cout << linked_list.get_head()->get_data() << " has been removed from the queue." << endl; 
     linked_list.delete_first_node();
 }

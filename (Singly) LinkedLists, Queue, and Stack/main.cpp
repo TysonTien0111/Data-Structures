@@ -1,12 +1,34 @@
 #include "SinglyLinkedLists.hpp"
 #include "Node.hpp"
 #include "Queue.hpp"
+#include "Stack.hpp"
 
 #include <iostream>
 
 using namespace std;
 
 int main() {
+    // Stack my_stack;
+    //
+    // cout << my_stack.peek() << endl;
+    // my_stack.pop();
+    // my_stack.display();
+    //
+    // for (int i = 1; i < 11; i++) {
+    //     my_stack.push(i);
+    // }
+    //
+    // my_stack.display();
+    // cout << my_stack.peek() << endl;
+    // my_stack.pop();
+    // cout << my_stack.peek() << endl;
+    // my_stack.pop();
+    // my_stack.pop();
+    // my_stack.pop();
+    // my_stack.pop();
+    // cout << my_stack.peek() << endl;
+    // my_stack.display();
+
     // Queue my_queue;
     //
     // my_queue.is_queue_empty();
