@@ -11,7 +11,8 @@ class BinarySearchTree: public Node {
         Node* get_root ();
         int get_node_count ();
         void iterative_insert (int x);
-        void recursive_insert ();
+        void recursive_insert (int x, Node* current_node);
+        void iterative_delete (int x);
         ~BinarySearchTree ();
     private:
         Node* root;
