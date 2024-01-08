@@ -79,7 +79,8 @@ void BinarySearchTree::recursive_insert (int x, Node* current_node) {
     }
 
     Node* next_pointer = (x < current_node->get_data()) 
-            ? (current_node->get_left_pointer()) : (current_node->get_right_pointer());
+                        ? (current_node->get_left_pointer()) 
+                        : (current_node->get_right_pointer());
 
     if (next_pointer == nullptr) {
         Node* new_node = new Node();
@@ -109,8 +110,9 @@ void BinarySearchTree::iterative_delete (int x) {
         while (current_node != nullptr) {
             if (x == current_node->get_data()) {
                 if ((current_node->get_left_pointer() == nullptr) 
-                        && (current_node->get_right_pointer() == nullptr)) {
-                    if ((parent_node != nullptr) && (current_node == parent_node->get_left_pointer())) {
+                && (current_node->get_right_pointer() == nullptr)) {
+                    if ((parent_node != nullptr) 
+                    && (current_node == parent_node->get_left_pointer())) {
                         parent_node->set_left_pointer(nullptr);
                     } else if (parent_node != nullptr) {
                         parent_node->set_right_pointer(nullptr);
@@ -120,7 +122,7 @@ void BinarySearchTree::iterative_delete (int x) {
                     node_count--;
                 } else {
                     if ((current_node->get_left_pointer() != nullptr) 
-                            && (current_node->get_right_pointer() != nullptr)) {
+                    && (current_node->get_right_pointer() != nullptr)) {
                         // Right subtree, minimum node
                         // int temp_data = current_node->get_data();
                         // Node* temp_node = current_node->get_right_pointer();
@@ -133,18 +135,10 @@ void BinarySearchTree::iterative_delete (int x) {
                         // current_node->set_data(temp_node->get_data());
                         // temp_node->set_data(temp_data);
                         // 
-                        // if (current_node == root) {
-                        //     if (parent_node == nullptr) {
-                        //         current_node->set_right_pointer(temp_node->get_right_pointer());
-                        //     } else {    
-                        //         parent_node->set_left_pointer(temp_node->get_right_pointer());
-                        //     }
+                        // if (current_node->get_right_pointer() == temp_node) {
+                        //     current_node->set_right_pointer(temp_node->get_right_pointer());
                         // } else {
-                        //     if (current_node->get_right_pointer() == temp_node) {
-                        //         current_node->set_right_pointer(temp_node->get_right_pointer());
-                        //     } else {
-                        //         parent_node->set_left_pointer(temp_node->get_right_pointer());
-                        //     }
+                        //     parent_node->set_left_pointer(temp_node->get_right_pointer());
                         // }
                         // 
                         // temp_node->set_right_pointer(nullptr);
@@ -163,18 +157,10 @@ void BinarySearchTree::iterative_delete (int x) {
                         current_node->set_data(temp_node->get_data());
                         temp_node->set_data(temp_data);
 
-                        if (current_node == root) {
-                            if (parent_node == nullptr) {
-                                current_node->set_left_pointer(temp_node->get_left_pointer());
-                            } else {
-                                parent_node->set_right_pointer(temp_node->get_left_pointer());
-                            }
+                        if (current_node->get_left_pointer() == temp_node) {
+                            current_node->set_left_pointer(temp_node->get_left_pointer());
                         } else {
-                            if () {
-
-                            } else {
-
-                            }
+                            parent_node->set_right_pointer(temp_node->get_left_pointer());
                         }
 
                         temp_node->set_left_pointer(nullptr);
@@ -182,7 +168,8 @@ void BinarySearchTree::iterative_delete (int x) {
                         node_count--;
                     } else {
                         Node* child_node = (current_node->get_left_pointer() != nullptr) 
-                                ? (current_node->get_left_pointer()) : (current_node->get_right_pointer()); 
+                                        ? (current_node->get_left_pointer()) 
+                                        : (current_node->get_right_pointer()); 
 
                         if (parent_node != nullptr) { 
                             if (current_node == parent_node->get_left_pointer()) {
@@ -218,6 +205,82 @@ void BinarySearchTree::iterative_delete (int x) {
         }
 
         cout << "The value " << x << " is not in the Binary Search Tree." << endl;
+    }
+}
+
+void BinarySearchTree::recursive_delete(int x, Node* current_node, Node* parent_node) {
+    if (node_count == 0) {
+        cout << "The Binary Search tree is empty, can't delete " << x << "." << endl;
+        return;
+    }
+
+    Node* next_pointer = (x < current_node->get_data()) 
+                        ? (current_node->get_left_pointer()) 
+                        : (current_node->get_right_pointer());
+
+    if (current_node->get_data() == x) {
+        if ((current_node->get_left_pointer() == nullptr) 
+            && (current_node->get_right_pointer() == nullptr)) {
+            if (parent_node != nullptr) {         
+                if (parent_node->get_left_pointer() == current_node) {
+                    parent_node->set_left_pointer(nullptr);
+                } else {
+                    parent_node->set_right_pointer(nullptr);
+                }
+            }
+        } else if ((current_node->get_left_pointer() != nullptr) 
+                    && (current_node->get_right_pointer() != nullptr)) {
+            //Right subtree, minimum node
+            Node* temp_node = current_node->get_right_pointer();
+            find_min_node(temp_node, current_node);
+            current_node->set_data(temp_node->get_data());
+
+            if (current_node->get_right_pointer() == temp_node) {
+                current_node->set_right_pointer(temp_node->get_right_pointer());
+            } else {
+                parent_node->set_left_pointer(temp_node->get_right_pointer());
+            }
+
+            temp_node->set_right_pointer(nullptr);
+            delete temp_node;
+            node_count--;
+            return;
+        } else {
+            Node* child_node = (current_node->get_left_pointer() != nullptr) 
+                            ? (current_node->get_left_pointer()) 
+                            : (current_node->get_right_pointer());
+
+            if (parent_node != nullptr) {
+                if (parent_node->get_left_pointer() == current_node) {
+                    parent_node->set_left_pointer(child_node);
+                } else {
+                    parent_node->set_right_pointer(child_node);
+                }
+            } else {
+                root = (current_node->get_left_pointer() != nullptr) 
+                    ? (current_node->get_left_pointer()) 
+                    : (current_node->get_right_pointer());
+            }
+
+            current_node->set_left_pointer(nullptr);
+            current_node->set_right_pointer(nullptr);
+        }
+
+        delete current_node;
+        node_count--;
+
+        cout << x << " has been removed from the Binary Search Tree." << endl;
+    } else if (next_pointer != nullptr) {
+        recursive_delete(x, next_pointer, current_node);
+    } else {
+        cout << "The value " << x << " is not in the Binary Search Tree." << endl;
+        return;
+    }
+}
+
+void BinarySearchTree::find_min_node(Node*& current_node, Node*& parent_node) {
+    if (current_node->get_left_pointer() != nullptr) {
+        find_min_node(current_node->get_left_pointer(), current_node);
     }
 }
 

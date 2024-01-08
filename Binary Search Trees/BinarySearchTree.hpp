@@ -13,6 +13,8 @@ class BinarySearchTree: public Node {
         void iterative_insert (int x);
         void recursive_insert (int x, Node* current_node);
         void iterative_delete (int x);
+        void recursive_delete (int x, Node* current_node, Node* parent_node); 
+        void find_min_node(Node*& current_node, Node*& parent_node);
         ~BinarySearchTree ();
     private:
         Node* root;
